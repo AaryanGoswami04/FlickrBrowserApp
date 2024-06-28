@@ -12,7 +12,7 @@ import android.view.Menu
 import android.view.MenuItem
 import com.example.flickrbrowser.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity(), GetRawData.OnDownloadComplete{
+class MainActivity : AppCompatActivity(), GetRawData.OnDownloadComplete, GetFlickrData.OnDataAvailable {
     private val TAG = "MainActivity"
 
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -32,13 +32,8 @@ class MainActivity : AppCompatActivity(), GetRawData.OnDownloadComplete{
 //        setupActionBarWithNavController(navController, appBarConfiguration)
 
         val getRawData = GetRawData(this)
-      //  getRawData.setDownloadCompleteListener(this)
         getRawData.execute("https://api.flickr.com/services/feeds/photos_public.gne?tags=android,oreo&format=json&nojsoncallback=1")
-//        binding.fab.setOnClickListener { view ->
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                .setAction("Action", null)
-//                .setAnchorView(R.id.fab).show()
-//        }
+
         Log.d(TAG, "OnCreate ends")
     }
 
@@ -65,14 +60,22 @@ class MainActivity : AppCompatActivity(), GetRawData.OnDownloadComplete{
                 || super.onSupportNavigateUp()
     }
 
-//    companion object {
+    //    companion object {
 //        private const val TAG = "MainActivity"
 //    }
-    override fun onDownloadComplete(data: String, status: DownloadStatus){
-        if(status == DownloadStatus.OK){
-            Log.d(TAG, "DonwloadComplete CALLED")
-        }
-    else Log.d(TAG, "DonwloadComplete failed with status $status")
+    override fun onDownloadComplete(data: String, status: DownloadStatus) {
+        if (status == DownloadStatus.OK) {
+            Log.d(TAG, "onDownloadComplete CALLED")
+            val getFlickrJsonData = GetFlickrData(this)
+        } else Log.d(TAG, "DownloadComplete failed with status $status")
     }
 
+    override fun onDataAvailable(data: List<Photo>) {
+        Log.d(TAG, "onDataAvailable called, data is $data")
+        Log.d(TAG, "onDataAvailable ends")
+    }
+
+    override fun onError(exception: Exception) {
+        Log.d(TAG, "onError called")
+    }
 }
