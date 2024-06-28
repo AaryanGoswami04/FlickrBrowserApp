@@ -26,10 +26,12 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
 
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
-        appBarConfiguration = AppBarConfiguration(navController.graph)
-        setupActionBarWithNavController(navController, appBarConfiguration)
+//        val navController = findNavController(R.id.nav_host_fragment_content_main)
+//        appBarConfiguration = AppBarConfiguration(navController.graph)
+//        setupActionBarWithNavController(navController, appBarConfiguration)
 
+        val getRawData = GetRawData()
+        getRawData.execute("https://api.flickr.com/services/feeds/photos_public.gne?tags=android,oreo&format=json&nojsoncallback=1")
 //        binding.fab.setOnClickListener { view ->
 //            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                .setAction("Action", null)
@@ -60,7 +62,15 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
     }
-    companion object{
-        private const val TAG = "MainActivity"
+
+//    companion object {
+//        private const val TAG = "MainActivity"
+//    }
+    fun onDonwloadComplete(data: String, status: DownloadStatus){
+        if(status == DownloadStatus.OK){
+            Log.d(TAG, "DonwloadComplete CALLED")
+        }
+    else Log.d(TAG, "DonwloadComplete failed with status $status")
     }
+
 }
