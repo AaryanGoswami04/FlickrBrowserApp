@@ -12,8 +12,9 @@ import android.view.Menu
 import android.view.MenuItem
 import com.example.flickrbrowser.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), GetRawData.OnDownloadComplete{
     private val TAG = "MainActivity"
+
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
@@ -30,7 +31,8 @@ class MainActivity : AppCompatActivity() {
 //        appBarConfiguration = AppBarConfiguration(navController.graph)
 //        setupActionBarWithNavController(navController, appBarConfiguration)
 
-        val getRawData = GetRawData()
+        val getRawData = GetRawData(this)
+      //  getRawData.setDownloadCompleteListener(this)
         getRawData.execute("https://api.flickr.com/services/feeds/photos_public.gne?tags=android,oreo&format=json&nojsoncallback=1")
 //        binding.fab.setOnClickListener { view ->
 //            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -66,7 +68,7 @@ class MainActivity : AppCompatActivity() {
 //    companion object {
 //        private const val TAG = "MainActivity"
 //    }
-    fun onDonwloadComplete(data: String, status: DownloadStatus){
+    override fun onDownloadComplete(data: String, status: DownloadStatus){
         if(status == DownloadStatus.OK){
             Log.d(TAG, "DonwloadComplete CALLED")
         }

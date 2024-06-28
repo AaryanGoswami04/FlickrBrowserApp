@@ -2,7 +2,9 @@ package com.example.flickrbrowser
 
 import android.util.Log
 import android.os.AsyncTask
+import android.telephony.TelephonyCallback.DataActivityListener
 import java.io.IOException
+import java.io.ObjectOutput
 import java.net.MalformedURLException
 import java.net.URL
 
@@ -10,13 +12,22 @@ enum class DownloadStatus {
     OK, IDLE, NOT_INITIALISED, FAILED_OR_EMPTY, PERMISSIONS_ERROR, ERROR
 }
 
-class GetRawData : AsyncTask<String, Void, String>() {
+class GetRawData (private val listener: OnDownloadComplete): AsyncTask<String, Void, String>() {
     private val TAG = "GetRawData"
     private var downloadStatus = DownloadStatus.IDLE
 
+    interface OnDownloadComplete{
+        fun onDownloadComplete(data: String, status: DownloadStatus)
+    }
+//    private var listener: MainActivity? = null
+//
+//    fun setDownloadCompleteListener(callbackObject: MainActivity){
+//        listener = callbackObject
+//    }
     @Deprecated("Deprecated in Java")
-    override fun onPostExecute(result: String?) {
+    override fun onPostExecute(result: String) {
         Log.d(TAG, "onPostExecute called, parameter is $result")
+        listener.onDownloadComplete(result, downloadStatus)
     }
 
     @Deprecated("Deprecated in Java")
