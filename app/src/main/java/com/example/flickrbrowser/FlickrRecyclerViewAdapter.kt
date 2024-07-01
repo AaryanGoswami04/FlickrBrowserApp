@@ -11,7 +11,7 @@ import com.squareup.picasso.Picasso
 
 class FlickrImageViewHolder(view: View): RecyclerView.ViewHolder(view){
     var thumbnail: ImageView = view.findViewById(R.id.thumbnail)
-    var title1: TextView = view.findViewById(R.id.title1)
+    var title: TextView = view.findViewById(R.id.title)
 
 }
 class FlickrRecyclerViewAdapter(private var photoList: List<Photo>) : RecyclerView.Adapter<FlickrImageViewHolder>() {
@@ -39,8 +39,7 @@ class FlickrRecyclerViewAdapter(private var photoList: List<Photo>) : RecyclerVi
        // Picasso.with(holder.thumbnail.context).load(photoItem.image).error(R.drawable.placeholder).placeholder(R.drawable.placeholder).into(holder.thumbnail)
         Picasso.get().load(photoItem.image).error(R.drawable.placeholder).placeholder(R.drawable.placeholder).into(holder.thumbnail)
 
-        holder.title1.text = photoItem.title
-
+        holder.title.text = photoItem.title
     }
 
     override fun getItemCount(): Int {

@@ -34,7 +34,7 @@ class GetRawData (private val listener: OnDownloadComplete): AsyncTask<String, V
     override fun doInBackground(vararg params: String?): String {
         if (params[0] == null) {
             downloadStatus = DownloadStatus.NOT_INITIALISED
-            return "No URL Specified"
+            return "No URL specified"
         }
         try {
             downloadStatus = DownloadStatus.OK
@@ -43,7 +43,7 @@ class GetRawData (private val listener: OnDownloadComplete): AsyncTask<String, V
             val errorMessage = when (e) {
                 is MalformedURLException -> {
                     downloadStatus = DownloadStatus.NOT_INITIALISED
-                    "doInBackground: invalid URL ${e.message}"
+                    "doInBackground: Invalid URL ${e.message}"
                 }
 
                 is IOException -> {
@@ -53,12 +53,10 @@ class GetRawData (private val listener: OnDownloadComplete): AsyncTask<String, V
 
                 is SecurityException -> {
                     downloadStatus = DownloadStatus.PERMISSIONS_ERROR
-                    "doInBackground: Security Exception: needs permission? ${e.message}"
-                }
-
-                else -> {
+                    "doInBackground: Security exception: Needs permission? ${e.message}"
+                } else -> {
                     downloadStatus = DownloadStatus.ERROR
-                    "download error: ${e.message}"
+                    "Unknown error: ${e.message}"
                 }
             }
             Log.e(TAG, errorMessage)
