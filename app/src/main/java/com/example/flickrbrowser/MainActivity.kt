@@ -5,13 +5,15 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.flickrbrowser.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity(), GetRawData.OnDownloadComplete, GetFlickrData.OnDataAvailable {
+class MainActivity : AppCompatActivity(), GetRawData.OnDownloadComplete, GetFlickrData.OnDataAvailable, RecyclerItemClickListener.OnRecyclerClickListener {
     private val TAG = "MainActivity"
 
     private val flickrRecyclerViewAdapter = FlickrRecyclerViewAdapter(ArrayList())
@@ -25,13 +27,13 @@ class MainActivity : AppCompatActivity(), GetRawData.OnDownloadComplete, GetFlic
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         setSupportActionBar(binding.toolbar)
+
+
         val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.addOnItemTouchListener(RecyclerItemClickListener(this, recyclerView, this))
         recyclerView.adapter = flickrRecyclerViewAdapter
-
-
 
         val url = createUri("https://api.flickr.com/services/feeds/photos_public.gne","android,oreo", "en-us", true)
         val getRawData = GetRawData(this)
@@ -39,6 +41,17 @@ class MainActivity : AppCompatActivity(), GetRawData.OnDownloadComplete, GetFlic
 
         Log.d(TAG, "OnCreate ends")
     }
+
+    override fun onItemClick(view: View, position: Int) {
+        Log.d(TAG, "onItemClick starts")
+        Toast.makeText(this, "Normal tap at position $position", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onItemLongClick(view: View, position: Int) {
+        Log.d(TAG, "onItemLongClick starts")
+        Toast.makeText(this, "Long tap at position $position", Toast.LENGTH_SHORT).show()
+    }
+
     private fun createUri(baseURL: String, searchCriteria: String, lang: String, matchAll: Boolean): String {
         Log.d(TAG, "createUrl starts")
 

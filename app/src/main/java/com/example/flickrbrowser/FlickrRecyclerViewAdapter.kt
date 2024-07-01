@@ -35,9 +35,18 @@ class FlickrRecyclerViewAdapter(private var photoList: List<Photo>) : RecyclerVi
 
     override fun onBindViewHolder(holder: FlickrImageViewHolder, position: Int) {
         val photoItem = photoList[position]
-        Log.d(TAG, "nBindViewHolder")
+
+        Log.d(TAG, "onBindViewHolder: Photo title = ${photoItem.title}, Photo image = ${photoItem.image}")
        // Picasso.with(holder.thumbnail.context).load(photoItem.image).error(R.drawable.placeholder).placeholder(R.drawable.placeholder).into(holder.thumbnail)
-        Picasso.get().load(photoItem.image).error(R.drawable.placeholder).placeholder(R.drawable.placeholder).into(holder.thumbnail)
+        Picasso.get().load(photoItem.image).error(R.drawable.placeholder).placeholder(R.drawable.placeholder).into(holder.thumbnail, object : com.squareup.picasso.Callback {
+            override fun onSuccess() {
+                Log.d(TAG, "Image loaded successfully for position $position")
+            }
+
+            override fun onError(e: Exception?) {
+                Log.e(TAG, "Error loading image for position $position", e)
+            }
+        })
 
         holder.title.text = photoItem.title
     }
