@@ -1,6 +1,7 @@
 package com.example.flickrbrowser
 
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -9,18 +10,14 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.flickrbrowser.databinding.ActivitySeachBinding
 
-class SearchActivity : AppCompatActivity() {
-
-    private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var binding: ActivitySeachBinding
+class SearchActivity : BaseActivity() {
+    private val TAG = "SearchActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.d(TAG, ".onCreate starts")
         super.onCreate(savedInstanceState)
-
-        binding = ActivitySeachBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        setSupportActionBar(binding.toolbar)
-
+        setContentView(R.layout.activity_seach)
+        activateToolbar(true)
+        Log.d(TAG, ".onCreate ENDS")
    }
 }

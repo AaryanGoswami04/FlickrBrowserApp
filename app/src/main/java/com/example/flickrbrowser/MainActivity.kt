@@ -1,5 +1,6 @@
 package com.example.flickrbrowser
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -13,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.flickrbrowser.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity(), GetRawData.OnDownloadComplete, GetFlickrData.OnDataAvailable, RecyclerItemClickListener.OnRecyclerClickListener {
+class MainActivity : BaseActivity(), GetRawData.OnDownloadComplete, GetFlickrData.OnDataAvailable, RecyclerItemClickListener.OnRecyclerClickListener {
     private val TAG = "MainActivity"
 
     private val flickrRecyclerViewAdapter = FlickrRecyclerViewAdapter(ArrayList())
@@ -27,8 +28,7 @@ class MainActivity : AppCompatActivity(), GetRawData.OnDownloadComplete, GetFlic
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.toolbar)
-
+        activateToolbar(false)
 
         val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -49,7 +49,13 @@ class MainActivity : AppCompatActivity(), GetRawData.OnDownloadComplete, GetFlic
 
     override fun onItemLongClick(view: View, position: Int) {
         Log.d(TAG, "onItemLongClick starts")
-        Toast.makeText(this, "Long tap at position $position", Toast.LENGTH_SHORT).show()
+      //  Toast.makeText(this, "Long tap at position $position", Toast.LENGTH_SHORT).show()
+        val photo = flickrRecyclerViewAdapter.getPhoto(position)
+        if(photo!=null){
+            val intent = Intent(this, PhotoDetailsActivity::class.java)
+            intent.putExtra(PHOTO_TRANSFER, photo)
+            startActivity(intent)
+        }
     }
 
     private fun createUri(baseURL: String, searchCriteria: String, lang: String, matchAll: Boolean): String {
@@ -71,24 +77,12 @@ class MainActivity : AppCompatActivity(), GetRawData.OnDownloadComplete, GetFlic
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
         }
     }
 
-//    override fun onSupportNavigateUp(): Boolean {
-//        val navController = findNavController(R.id.nav_host_fragment_content_main)
-//        return navController.navigateUp(appBarConfiguration)
-//                || super.onSupportNavigateUp()
-//    }
-
-    //    companion object {
-//        private const val TAG = "MainActivity"
-//    }
     override fun onDownloadComplete(data: String, status: DownloadStatus) {
         if (status == DownloadStatus.OK) {
             Log.d(TAG, "onDownloadComplete CALLED")
