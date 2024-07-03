@@ -24,17 +24,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".PhotoDetailsActivity"
-            android:exported="false"
 
-            android:theme="@style/Theme.FlickrBrowser" />
         <activity
             android:name=".SearchActivity"
             android:parentActivityName=".MainActivity"
             android:exported="false"
-            android:theme="@style/Theme.FlickrBrowser" />
+            android:theme="@style/Theme.FlickrBrowser">
+<!--        <meta-data-->
+<!--            android:name="android.support.PARENT_ACTIVITY"-->
+<!--            android:value="com.example.flickrbrowser.MainActivity"/>-->
+        </activity>
 
+        <activity
+            android:name=".PhotoDetailsActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.FlickrBrowser">
+<!--            <meta-data-->
+<!--                android:name="android.support.PARENT_ACTIVITY"-->
+<!--                android:value="com.example.flickrbrowser.MainActivity"/>-->
+        </activity>
     </application>
 
 </manifest>
