@@ -22,7 +22,6 @@ class PhotoDetailsActivity : BaseActivity() {
             binding.contentPhotoDetails.photoTags.text = it.tags
             Picasso.get().load(it.image).placeholder(R.drawable.placeholder).into(binding.contentPhotoDetails.photoImage)
         } ?: run {
-
             Log.e("PhotoDetailsActivity", "Photo data is missing!")
         }
     }

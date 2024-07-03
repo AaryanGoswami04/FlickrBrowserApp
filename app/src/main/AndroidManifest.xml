@@ -16,8 +16,8 @@
         tools:targetApi="31">
         <activity
             android:name=".MainActivity"
-            android:exported="true"
-            android:theme="@style/Theme.FlickrBrowser">
+            android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,8 +28,8 @@
         <activity
             android:name=".SearchActivity"
             android:parentActivityName=".MainActivity"
-            android:exported="false"
-            android:theme="@style/Theme.FlickrBrowser">
+            android:exported="false">
+
 <!--        <meta-data-->
 <!--            android:name="android.support.PARENT_ACTIVITY"-->
 <!--            android:value="com.example.flickrbrowser.MainActivity"/>-->
@@ -38,8 +38,8 @@
         <activity
             android:name=".PhotoDetailsActivity"
             android:exported="false"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.FlickrBrowser">
+            android:parentActivityName=".MainActivity">
+
 <!--            <meta-data-->
 <!--                android:name="android.support.PARENT_ACTIVITY"-->
 <!--                android:value="com.example.flickrbrowser.MainActivity"/>-->
