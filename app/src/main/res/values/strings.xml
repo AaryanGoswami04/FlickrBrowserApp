@@ -44,4 +44,5 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
     <string name="textview">TextView</string>
+    <string name="browse_image_discription">Downloaded Flickr Photo</string>
 </resources>

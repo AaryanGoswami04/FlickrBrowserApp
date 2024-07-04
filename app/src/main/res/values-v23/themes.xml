@@ -2,8 +2,9 @@
 
     <style name="Theme.FlickrBrowser" parent="Base.Theme.FlickrBrowser">
         <!-- Transparent system bars for edge-to-edge. -->
-        <item name="android:navigationBarColor">@android:color/transparent</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:windowLightStatusBar">?attr/isLightTheme</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:colorBackgroundFloating">@color/primary</item>
+        <item name="android:navigationBarColor">@color/primary_dark</item>
     </style>
 </resources>
