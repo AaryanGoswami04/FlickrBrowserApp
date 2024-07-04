@@ -17,9 +17,10 @@ class PhotoDetailsActivity : BaseActivity() {
         val photo: Photo? = intent.getParcelableExtra(PHOTO_TRANSFER)
 
         photo?.let {
-            binding.contentPhotoDetails.photoTitle.text = it.title
-            binding.contentPhotoDetails.photoAuthor.text = it.author
-            binding.contentPhotoDetails.photoTags.text = it.tags
+
+            binding.contentPhotoDetails.photoTitle.text = resources.getString(R.string.photo_title_text, photo.title)
+            binding.contentPhotoDetails.photoAuthor.text = photo.author
+            binding.contentPhotoDetails.photoTags.text = resources.getString(R.string.photo_tags_text, photo.tags)
             Picasso.get().load(it.image).placeholder(R.drawable.placeholder).into(binding.contentPhotoDetails.photoImage)
         } ?: run {
             Log.e("PhotoDetailsActivity", "Photo data is missing!")
