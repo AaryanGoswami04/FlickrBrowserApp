@@ -2,6 +2,8 @@ package com.example.flickrbrowser
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.widget.SearchView
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -12,6 +14,7 @@ import com.example.flickrbrowser.databinding.ActivitySeachBinding
 
 class SearchActivity : BaseActivity() {
     private val TAG = "SearchActivity"
+    private var searchView: SearchView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d(TAG, ".onCreate starts")
@@ -20,4 +23,9 @@ class SearchActivity : BaseActivity() {
         activateToolbar(true)
         Log.d(TAG, ".onCreate ENDS")
    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_search, menu)
+        return true
+    }
 }
