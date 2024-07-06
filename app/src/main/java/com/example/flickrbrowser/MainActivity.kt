@@ -3,11 +3,13 @@ package com.example.flickrbrowser
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -102,5 +104,22 @@ class MainActivity : BaseActivity(), GetRawData.OnDownloadComplete, GetFlickrDat
 
     override fun onError(exception: Exception) {
         Log.d(TAG, "onError called")
+    }
+
+    override fun onResume() {
+        Log.d(TAG, ". onResume called")
+        super.onResume()
+
+        val sharePref = PreferenceManager.getDefaultSharedPreferences(this)
+        val queryResult = sharePref.getString(FLICKR_QUERY, "")
+
+        if (queryResult != null && queryResult.isNotEmpty()) {
+            val url = createUri("https://api.flickr.com/services/feeds/photos_public.gne", queryResult,"en-us", true)
+            val getRawData = GetRawData(this)
+            getRawData.execute(url)
+        }
+
+
+        Log.d(TAG, ". onResume ends")
     }
 }
