@@ -25,13 +25,13 @@ class GetRawData (private val listener: OnDownloadComplete): AsyncTask<String, V
 //        listener = callbackObject
 //    }
     @Deprecated("Deprecated in Java")
-    override fun onPostExecute(result: String) {
+    public override fun onPostExecute(result: String) {
         Log.d(TAG, "onPostExecute called")
         listener.onDownloadComplete(result, downloadStatus)
     }
 
     @Deprecated("Deprecated in Java")
-    override fun doInBackground(vararg params: String?): String {
+    public override fun doInBackground(vararg params: String?): String {
         if (params[0] == null) {
             downloadStatus = DownloadStatus.NOT_INITIALISED
             return "No URL specified"

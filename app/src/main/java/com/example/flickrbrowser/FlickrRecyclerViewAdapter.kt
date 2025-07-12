@@ -1,5 +1,5 @@
 package com.example.flickrbrowser
-
+import com.bumptech.glide.Glide
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -52,7 +52,13 @@ class FlickrRecyclerViewAdapter(private var photoList: List<Photo>) : RecyclerVi
         if (holder is FlickrImageViewHolder) {
             val photoItem = photoList[position]
             Log.d(TAG, "onBindViewHolder: Photo title = ${photoItem.title}, Photo image = ${photoItem.image}")
-            Picasso.get().load(photoItem.image).error(R.drawable.placeholder).placeholder(R.drawable.placeholder).into(holder.thumbnail)
+
+            Glide.with(holder.thumbnail.context)
+                .load(photoItem.image)
+                .placeholder(R.drawable.placeholder)
+                .error(R.drawable.placeholder)
+                .into(holder.thumbnail)
+
             holder.title.text = photoItem.title
         } else if (holder is EmptyViewHolder) {
             holder.message.setText(R.string.empty_photo)
